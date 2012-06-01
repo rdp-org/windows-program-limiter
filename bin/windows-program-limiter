@@ -1,0 +1,5 @@
+#!/usr/bin/ruby
+
+require 'windows-program-limiter'
+
+Watcher.find_all_pids_matching_strings ARGV
