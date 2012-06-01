@@ -1,0 +1,2 @@
+This program allows you to "restrict" running programs, i.e. if you don't want to let yourself play video games during the day, you add the video game executable name to the list,
+then while this program runs, it will monitor and get mad at you if you run it.
