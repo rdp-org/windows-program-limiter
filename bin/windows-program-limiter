@@ -2,4 +2,9 @@
 $: << File.dirname(__FILE__) + "/../lib/"
 require 'windows-program-limiter'
 
-Watcher.poll_forever ARGV
+use = ARGV
+if use.empty?
+ use = ['ilab1.cs.byu.edu', 'firefox'] 
+ puts 'using defaults', use
+end
+Watcher.poll_forever use
