@@ -16,10 +16,13 @@ class Watcher
 
     procs_by_pid = {}
     if OS.windows?
+	
       procs = WMI::Win32_Process.find(:all)
       for proc in procs
         procs_by_pid[proc.ProcessId] = ("% 20s" % proc.Name.to_s) + ' ' + proc.CommandLine.to_s
-      end
+		proc.ole_free
+      end	  
+	  
     else
       a = `ps -ef` # my linux support isn't very good yet...
       a.lines.to_a[1..-1].each{|l| pid = l.split(/\s+/)[1]; procs_by_pid[pid.to_i] = l}
@@ -46,8 +49,7 @@ class Watcher
     if (got=find_all_pids_matching_strings(args)).length > 0
 	  @frame ||= begin
 	    frame = ParseTemplate::JFramer.new
-		setup_string = %!"I caught you cheating\! #{got.join(' ')}"!
-		puts setup_string
+		setup_string = %!"I caught you cheating\! #{got.join(' ')}:cheat_string"!
 		frame.parse_setup_string setup_string
 		frame.maximize
         frame.always_on_top=true		
@@ -55,12 +57,21 @@ class Watcher
 		  p 'closed'
 		  @frame = nil # let it just show up again to annoy LOL
 		}
+		frame.after_restored_either_way {
+		  sleep 3
+		  frame.maximize 
+		}
 		frame
 	   end
 	  
 	else
-	  @frame.close if @frame # race condition here LOL
-	  puts 'nothing found...'
+	  if @frame # race condition here LOL
+	    @frame.elements['cheat_string'] = 'mischief managed...'	    
+		sleep 0.5
+	    @frame.close 
+		@frame = nil
+	  end
+	  puts "nothing found (not cheating)...looked for #{args.inspect}, but not found..."
 	end
 	sleep 10
 	}
