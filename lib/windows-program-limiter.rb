@@ -5,10 +5,7 @@ if OS.windows?
 end
 require 'sane'
 
-require 'jruby-swing-helpers/lib/swing_helpers'
-require 'jruby-swing-helpers/lib/parse_template'
-
-include SwingHelpers # JFrame
+require 'jruby-swing-helpers/lib/simple_gui_creator/parse_template'
 
 class Watcher
 
@@ -49,7 +46,7 @@ class Watcher
     if (got=find_all_pids_matching_strings(args)).length > 0
 	  @frame ||= begin
 	    frame = ParseTemplate::JFramer.new
-		setup_string = %!"I caught you cheating\! #{got.join(' ')}:cheat_string"!
+		setup_string = %!"I caught you cheating\! Found: #{got.join(' ')}"!
 		frame.parse_setup_string setup_string
 		frame.maximize
         frame.always_on_top=true		
