@@ -4,7 +4,7 @@ require 'windows-program-limiter'
 
 use = ARGV
 if use.empty?
- use = ['ilab1.cs.byu.edu', 'firefox'] 
+ use = ['ilab1.cs.byu.edu', 'firefox.exe', 'opera.exe'] 
  puts 'using defaults', use
 end
 Watcher.poll_forever use

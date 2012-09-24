@@ -45,7 +45,7 @@ class Watcher
     loop {
     if (got=find_all_pids_matching_strings(args)).length > 0
 	  @frame ||= begin
-	    frame = ParseTemplate::JFramer.new
+	    frame = SimpleGuiCreator::ParseTemplate.new
 		setup_string = %!"I caught you cheating\! Found: #{got.join(' ')}"!
 		frame.parse_setup_string setup_string
 		frame.maximize
